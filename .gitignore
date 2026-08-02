@@ -1,0 +1,138 @@
+# ==============================================================================
+# NBA LOGIC ENGINE — REPOSITORY GITIGNORE POLICY
+# ==============================================================================
+
+# --- Data Ingestion, Logs, and Staging Files ---
+Logs/*.csv
+Logs/*.json
+Logs/Simulations/*.csv
+training_data/*.csv
+Prop Master/*.csv
+json_scrap/
+
+# Preserve configuration JSONs explicitly
+!macro_game_context.json
+
+# Cross-platform stream artifacts
+*.Zone.Identifier
+
+# --- Tainted / Serialized Model Outputs ---
+Models/*.json
+Models/*.pkl
+Models/*.bin
+Models/*.joblib
+
+# --- Python Byte-compiled / Optimized files ---
+__pycache__/
+*.py[codz]
+*$py.class
+*.so
+
+# --- Virtual Environments & Credentials ---
+.env
+.envrc
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.streamlit/secrets.toml
+
+# --- IDEs & Temporary Execution Files ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+tempCodeRunnerFile.py
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+
+# --- Packaging & Distribution ---
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+# ==============================================================================
+# NBA LOGIC ENGINE — REPOSITORY GITIGNORE POLICY
+# ==============================================================================
+
+# --- Data Ingestion, Logs, and Staging Files ---
+Logs/*.csv
+Logs/*.json
+Logs/Simulations/*.csv
+Training_Data/*.csv
+training_data/*.csv
+Prop Master/*.csv
+json_scrap/
+
+# Preserve configuration JSONs explicitly
+!macro_game_context.json
+
+# Cross-platform stream artifacts
+*.Zone.Identifier
+
+# --- Tainted / Serialized Model Outputs ---
+Models/*.json
+Models/*.pkl
+Models/*.bin
+Models/*.joblib
+
+# --- Python Byte-compiled / Optimized files ---
+__pycache__/
+*.py[codz]
+*$py.class
+*.so
+
+# --- Virtual Environments & Credentials ---
+.env
+.envrc
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.streamlit/secrets.toml
+
+# --- IDEs & Temporary Execution Files ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+tempCodeRunnerFile.py
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+
+# --- Packaging & Distribution ---
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST*.csvwheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST*.csv
+*.csv
+*.csv
