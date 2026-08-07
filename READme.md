@@ -61,3 +61,45 @@ Run your audit tool to monitor live game quarters and check active parlay legs a
 python3 utils/forensic_audit_tool.py
 ```
 Output Artifacts: Prints real-time probability margins and portfolio statuses directly to your terminal.
+
+### **August 7, 2026**
+* **Automated File Naming:** Prediction files are now automatically saved with the exact date and time they were generated so old files aren't overwritten.
+* **Better Player Tracking:** The engine now understands player movement and workload on the court much better, making our points, assists, and rebounds predictions more accurate.
+* **Clean Folder Structure:** Reorganized the entire project into four easy-to-use phases: data gathering, cleaning, model training, and final simulations. 
+* **Backtesting Added:** Added new tools to run our models against full past seasons to see exactly how well our strategies would have performed historically.
+
+**Updated Pipeline Execution Order:**
+Run the following script sequence sequentially from your project root directory:
+
+# Step 1: Data Gathering (The Harvesters)
+```bash
+python3 ingestion/extract_player_stats.py
+python3 ingestion/extract_play_by_play.py
+python3 ingestion/generate_season_prop_master.py
+```
+
+# Step 2: Data Cleaning (The Refinery)
+```bash
+
+python3 process/audit_league_forensics.py
+python3 process/macro_game_brain.py
+python3 process/prepare_quantum_intel.py
+python3 process/situational_moments_brain.py
+python3 process/prop.py
+python3 process/train_prop_models.py
+```
+
+# Step 3: Model Training (The Brains)
+```bash
+python3 Core/ensemble.py
+python3 Core/metadata_sync.py
+python3 Core/update_train.py
+python3 Core/update_referee_tracker.py
+```
+
+# Step 4: Simulations & Backtesting (The Executioners)
+```bash
+python3 Scripts/backtest_season.py
+python3 Scripts/engine_sim.py
+python3 Scripts/full_season_backtest.py
+```
