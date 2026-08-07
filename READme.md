@@ -65,10 +65,11 @@ Output Artifacts: Prints real-time probability margins and portfolio statuses di
 ### **August 7, 2026**
 * **Automated File Naming:** Prediction files are now automatically saved with the exact date and time they were generated so old files aren't overwritten.
 * **Better Player Tracking:** The engine now understands player movement and workload on the court much better, making our points, assists, and rebounds predictions more accurate.
+* **Realistic Odds & Overconfidence Fix:** Implemented mathematical safety limits (capping stacked modifiers and clamping maximum probability boundaries between 5.5% and 94.5%) so predictions no longer generate unrealistic 99.9% locks.
 * **Clean Folder Structure:** Reorganized the entire project into four easy-to-use phases: data gathering, cleaning, model training, and final simulations. 
 * **Backtesting Added:** Added new tools to run our models against full past seasons to see exactly how well our strategies would have performed historically.
 
-**Updated Pipeline Execution Order:**
+**Updated Pipeline Order:**
 Run the following script sequence sequentially from your project root directory:
 
 # Step 1: Data Gathering (The Harvesters)
@@ -99,7 +100,6 @@ python3 Core/update_referee_tracker.py
 
 # Step 4: Simulations & Backtesting (The Executioners)
 ```bash
-python3 Scripts/backtest_season.py
 python3 Scripts/engine_sim.py
 python3 Scripts/full_season_backtest.py
 ```
