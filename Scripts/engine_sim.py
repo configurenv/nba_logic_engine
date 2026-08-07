@@ -3,6 +3,7 @@
 # NBA LOGIC ENGINE — SIMULATION & EXECUTION LAYER
 # FILE: Scripts/engine_sim.py
 # ROLE: Production Inference Core (XGBoost 6-Dim Feature Mapping & Skew-Normal Engine)
+# PIPELINE EVOLUTION: Multiplicative Poisoning Caps & Confidence Ceilings Applied
 # =================================================================================================
 
 import os
@@ -174,30 +175,43 @@ class Sentinel_Production_Apex:
             if not brain_matched or mean_val is None:
                 continue
 
-            # Target Variance Mapping
-            std_val = max(1.5, mean_val * 0.25)
+            # Establish the neural baseline before applying external logic modifiers
+            xgb_baseline_mean = mean_val
             skew_val = 0.5 
 
-            # Apply Macro Environment Defensive Taxes
+            # 1. Apply Macro Environment Defensive Taxes
             opposing_defense = defensive_multipliers.get(base_profile['TEAM_ABBR'], 1.0)
             mean_val *= opposing_defense
 
-            # Usage Vacuum & Biomechanical Adjustments
+            # 2. Usage Vacuum & Biomechanical Adjustments
             if base_profile['USG_PCT_STABLE'] < 0.21:
                 rotation_contractor = float(self.macro_context.get("bench_minutes_contractor", 0.50))
                 mean_val *= rotation_contractor
-                std_val *= 1.35 
                 
             if p_clean in self.biomechanical_penalties:
                 mean_val *= self.biomechanical_penalties[p_clean]
-                std_val *= 1.15
                 
             if coaching_context in self.MATCHUP_ROTATION_PROFILES and raw_name.upper().strip() in self.MATCHUP_ROTATION_PROFILES[coaching_context]:
                 mean_val *= self.MATCHUP_ROTATION_PROFILES[coaching_context][raw_name.upper().strip()]
 
+            # --- [ANTI-POISONING GOVERNOR: THE CUMULATIVE MODIFIER CAP] ---
+            # Prevents modifiers from stacking into unrealistic outliers
+            cumulative_shift = mean_val / max(0.1, xgb_baseline_mean)
+            if cumulative_shift > 1.30:
+                mean_val = xgb_baseline_mean * 1.30
+            elif cumulative_shift < 0.70:
+                mean_val = xgb_baseline_mean * 0.70
+
+            # --- [VARIANCE FLOOR: THE ROOKIE TAX] ---
+            # Increased minimum standard deviation to prevent artificial locks
+            std_val = max(2.25, mean_val * 0.28)
+
             # Execute Probability Calculation
             prob_raw = (1.0 - self.skew_normal_cdf(milestone - 0.5, mean_val, std_val, skew_val)) * 100
-            prob = round(max(0.01, min(99.99, prob_raw)), 2)
+            
+            # --- [CONFIDENCE CEILING] ---
+            # Clamp the absolute final probability between 5.5% and 94.5%
+            prob = round(max(5.50, min(94.50, prob_raw)), 2)
             
             action = "BUY OVER" if prob >= 65.0 else ("BUY UNDER" if prob <= 35.0 else "PASS")
             
@@ -219,6 +233,8 @@ class Sentinel_Production_Apex:
             
             print("=================================================================")
             print(f"[SUCCESS] Apex Simulation Execution Complete.")
+            print(f"-> Multiplicative poisoning limits active (Max Drift: ±30%)")
+            print(f"-> Confidence Ceiling active (Clamp: 5.5% - 94.5%)")
             print(f"-> Generated {len(output_df)} calibrated predictions.")
             print(f"-> Exported to: {self.slate_path}")
             print("=================================================================")
