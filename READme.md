@@ -103,3 +103,4 @@ python3 Core/update_referee_tracker.py
 python3 Scripts/engine_sim.py
 python3 Scripts/full_season_backtest.py
 ```
+* **Enhanced Season Backtesting**: Upgraded historical simulations to automatically account for schedule fatigue on back-to-back game days, referee whistle variability, and workload shifts when teammates miss games. 
